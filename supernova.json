@@ -1,0 +1,16 @@
+{
+  "workspaceId": "20072",
+  "designSystemId": "22645",
+  "designSystemVersionId": "23232",
+  "brandId": "7f5cecbf-cdf2-4fed-a582-12bdfd9cda66",
+  "themeIds": [
+    "9e847310-a6c5-4335-9f2b-1ce786fa3509"
+  ],
+  "exporterId": "12865",
+  "workspaceName": "Design System teams",
+  "designSystemName": "Banco General",
+  "designSystemVersionName": "Shared draft",
+  "exporterName": "CSS",
+  "write_to": "C:\\Users\\zlewis\\Downloads\\result (2)",
+  "description": "Note to our fellow developers: Install Supernova integration from the VSCode marketplace and then our  CSS exporter will synchronize design data and generate appropriate code from the  Shared draft design system every time you request it through the extension interface, fully automatically."
+}

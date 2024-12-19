@@ -39,8 +39,13 @@ Note: Value is passed as `context` property because it is injected
       "measure": double
       "referencedToken": Measure | null
     },
+    "paragraphSpacing": {
+      "unit": "px",
+      "measure": double
+      "referencedToken": Measure | null
+    },
     "textDecoration": "None" | "Underline" | "Strikethrough"
-    "textCase": "Original" | "Upper" | "Lower" | "Camel"
+    "textCase": "Original" | "Upper" | "Lower" | "Camel" | "SmallCaps"
     "referencedToken": Typography | null
   }
 }
@@ -51,18 +56,48 @@ Rendered as:
 [text]
 
 *}
-
 {[ let fontStyle = "normal" /]}
 {[ if ds.isFontItalic(context.font) ]}
-  {[ set fontStyle = "italic" /]}
+  {[ fontStyle = "italic" /]}
+{[/]}
+{[ let textCaseCss = "" /]}
+{[ switch context.textCase ]}
+    {[ case "Upper"]}
+        {[ textCaseCss = "uppercase"/]}
+    {[ case "Lower"]}
+        {[ textCaseCss = "lowercase"/]}
+    {[ case "Camel"]}
+        {[ textCaseCss = "capitalize"/]}
+{[/]}
+{[ let textDecoration = "" /]}
+{[ switch context.textDecoration ]}
+    {[ case "Underline"]}
+        {[ textDecoration = "underline"/]}
+    {[ case "Strikethrough"]}
+        {[ textDecoration = "line-through"/]}
 {[/]}
 font-family: "{{ context.font.family }}";
 font-style: {{ fontStyle }};
 font-weight: {{ ds.fontWeight(context.font) }};
 font-size: {[ inject "rendered-measure" context context.fontSize /]};
-{[ if context.lineHeight ]}line-height: {[ inject "rendered-measure" context context.lineHeight /]};
+{[ if context.lineHeight ]}
+line-height: {[ inject "rendered-measure" context context.lineHeight /]};
 {[/]}
-{[ if (context.letterSpacing.unit === "Percent") ]}letter-spacing: {{ (context.letterSpacing.measure / 100).rounded(2) }}em; {[ else ]}letter-spacing: {[ inject "rendered-measure" context context.letterSpacing /]};
+letter-spacing: {[if (context.letterSpacing.unit === "Percent") ]}
+{{ (context.letterSpacing.measure / 100).rounded(2) }}em;
+{[ else ]}
+{[ inject "rendered-measure" context context.letterSpacing /]};
 {[/]}
-
 text-indent: {[ inject "rendered-measure" context context.paragraphIndent /]};
+{[ if textDecoration ]}
+text-decoration: {{ textDecoration }};
+{[/]}
+{[ if textCaseCss ]}
+text-transform: {{ textCaseCss }};
+{[/]}
+{[ if (context.textCase === "SmallCaps") ]}
+font-variant: small-caps;
+{[/]}
+{[ if context.paragraphSpacing ]}
+margin-bottom: {[ inject "rendered-measure" context context.paragraphSpacing /]};
+{[/]}

@@ -1,39 +1,49 @@
-<img src="https://github.com/Supernova-Studio/exporter-scss/blob/master/readme-icon.png?raw=true" alt="Supernova Logo" style="max-width:100%;">
+<img src="https://github.com/Supernova-Studio/exporter-css/blob/master/readme-icon.png?raw=true" alt="Supernova Logo" style="max-width:100%;">
 
 [Supernova](https://supernova.io) is a design system platform that manages your assets, tokens, components and allows you to write spectacular documentations for your entire teams. And because you found your way here, you are probably interested in its most advanced functionality - automatic hand-off of design and development assets, tokens and data in general. To learn everything Supernova, please check out our [developer documentation](https://developers.supernova.io/).
 
 
-# SCSS Exporter
+# CSS Exporter
 
-The SCSS Exporter allows you to **produce production-ready code for all product styles (such as colors) defined inside your design system** in such a way that you can immediately use them to style your application elements. Specifically, this exporter automates the coding of:
+The CSS allows you to **produce a CSS definitions** in such a way that it can be immediately used in your production codebase to style all your visual elements. Specifically, this exporter is capable of exporting the previews of:
 
 - [x] Color definitions
 - [x] Text Styles
 - [x] Gradients
 - [x] Shadows
 - [x] Borders
+- [x] Radii
+- [x] Measures
 
 You can generate all production ready-code either manually using Supernova's [VS Code extension](https://marketplace.visualstudio.com/items?itemName=SupernovaIO.pulsar-vsc-extension), or automate your code delivery pipeline using Supernova [Design Continuous Delivery](https://supernova.io/automated-code-delivery).
 
 
 ## Example Usage
 
-Once you have run the exporter against your design system, you can start using the code in your codebase right away. Here are a few examples of how you can use the output of the SCSS exporter:
-
-### [Example 1]
-
-Import `index.scss` file to your project and use generated styles
+Once you have run the exporter against your design system, you can start using the code in your codebase right away. To use the output of the exporter, simply add the stylesheets to your html page, like this:
 
 ```
-.yourClass {
-    color: $yourToken;
-}
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Style import test</title>
+  <style>
+    @import ".build/index.css";
+  </style>
+ </head>
+</html>
 ```
 
+Because tokens are defined as css variables, you can use them as such, anywhere you need that value (even in order definitions):
+
+```
+<p style="color: var(--colorContrast)">...</p>
+```
 
 ## Installing
 
-In order to make the Supernova SCSS exporter available for your organization so you can start generating code from your design system, please follow the installation guide in our [developer documentation](https://developers.supernova.io/using-exporters/installing-exporters).
+In order to make the Supernova CSS exporter available for your organization so you can start generating code from your design system, please follow the installation guide in our [developer documentation](https://developers.supernova.io/using-exporters/installing-exporters).
 
 
 ## Reporting Bugs or Requesting Features
@@ -93,3 +103,4 @@ Additionally, you can also use asset exporters for all major targets, enjoy!:
 - [Flutter SVG Asset Exporter](https://github.com/Supernova-Studio/exporter-flutter-svg-assets)
 
 To browse all exporters created by our amazing community, please visit the [Supernova](https://supernova.io) Exporter Store. 
+

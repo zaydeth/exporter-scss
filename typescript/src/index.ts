@@ -3,28 +3,20 @@
  */
 Pulsar.registerFunction(
   "readableVariableName",
-  function (token: Token, tokenGroup: TokenGroup, prefix: string) {
+  function (token, tokenGroup, prefix) {
     // Create array with all path segments and token name at the end
-    const nameSegments: string[] = [];
-
-    // Start path of the group
-    tokenGroup.path.forEach(s => nameSegments.push(...splitIntoWords(s)));
-
-    // Append name of the group
-    if (!tokenGroup.isRoot && !tokenGroup.isNonVirtualRoot) {
-      nameSegments.push(...splitIntoWords(tokenGroup.name));
+    const segments = [...tokenGroup.path];
+    if (!tokenGroup.isRoot || !tokenGroup.isNonVirtualRoot) {
+      segments.push(tokenGroup.name);
     }
-    
-    // Split the token name into words
-    nameSegments.push(...splitIntoWords(token.name));
+    segments.push(token.name);
 
-    // Add prefix if provided from external configuration
     if (prefix && prefix.length > 0) {
-      nameSegments.unshift(prefix);
+      segments.unshift(prefix);
     }
 
     // Create "sentence" separated by spaces so we can camelcase it all
-    let sentence = nameSegments.join(" ");
+    let sentence = segments.join(" ");
 
     // camelcase string from all segments
     sentence = sentence
@@ -42,10 +34,6 @@ Pulsar.registerFunction(
     return sentence;
   }
 );
-
-function splitIntoWords(string: string): string[] {
-  return string.match(/([A-Z]?[a-z]+|\d+|[A-Z]+(?![a-z]))/g) || []
-}
 
 function findAliases(token, allTokens) {
   let aliases = allTokens.filter(
@@ -134,12 +122,18 @@ function nonNegativeValue(num) {
 /** Convert type to CSS unit */
 function measureTypeIntoReadableUnit(type) {
   switch (type) {
-    case "Points":
-      return "pt";
     case "Pixels":
       return "px";
     case "Percent":
       return "%";
+    case "Rem":
+      return "rem";
+    case "Ms":
+      return "ms";
+    case "Raw":
+      return "";
+    case "Points":
+      return "pt";
     case "Ems":
       return "em";
   }
